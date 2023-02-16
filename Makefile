@@ -10,7 +10,7 @@ main: $(OBJECTS) main.o
 
 .PHONY: clean
 clean:
-	rm *.o
+	rm main *.o
 
 test-all: $(TESTS)
 
