@@ -7,7 +7,7 @@
 const char PLAYER_ONE_HAND = 'X';
 const char PLAYER_TWO_HAND = 'O';
 
-enum states{LHORIZ,LDIAG,VERT,RHORIZ,RDIAG};
+enum states{LDIAG,VERT,RDIAG,RHORIZ};
 
 class ConnectM {
 public:

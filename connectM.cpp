@@ -165,25 +165,9 @@ bool ConnectM::check4Win(int H) {
 
 int ConnectM::countWins(int H, int row, int col) {
     int wins = 0;
-    for(int i = LHORIZ; i <= RDIAG; i++) {
+    for(int i = LDIAG; i <= RHORIZ; i++) {
         int count = 1;
         switch(i) {
-            case LHORIZ:
-                for(int j = 1; j <= this->M - 1; j++) {
-                    if(isValidRowCol(row,col-j)) {
-                        if(this->board[row][col-j] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
-                            count+=1;
-                        }
-                        else break;
-                    }
-                    else {
-                        break;
-                    }
-                }
-                if(count == this->M) {
-                    wins+=1;
-                }
-                break;
             case LDIAG:
                 for(int j = 1; j <= this->M - 1; j++) {
                     if(isValidRowCol(row-j,col-j)) {
