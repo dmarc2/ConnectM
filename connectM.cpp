@@ -13,7 +13,7 @@ ConnectM::ConnectM(int N, int M, int H) {
 
 ConnectM::ConnectM(const ConnectM& obj) {
     if(this != &obj) {
-        deleteBoard();
+        //deleteBoard(); //May not need this since constructor is only used during declaration.
         this->N = obj.N;
         this->M = obj.M;
         this->H = obj.H;
@@ -34,6 +34,14 @@ void ConnectM::initBoard() {
     for(int i = 0; i < this->N; i++) {
         for(int j = 0; j < this->N; j++) {
             this->board[i][j] = ' ';
+        }
+    }
+}
+
+void ConnectM::initBoard(char** board) {
+    for(int i = 0; i < this->N; i++) {
+        for(int j = 0; j < this->N; j++) {
+            this->board[i][j] = board[i][j];
         }
     }
 }
@@ -75,7 +83,7 @@ bool ConnectM::move(int col, int H) {
     return false;
 }
 
-std::string ConnectM::getBoard() {
+std::string ConnectM::getBoardStr() {
     std::string board = "    ";
     //Insert column heading numbers
     int colNumber = 0;
@@ -127,5 +135,130 @@ void ConnectM::addHorizontalBorder(std::string& board) {
 }
 
 bool ConnectM::check4Win(int H) {
+    int wins = 0;
+    switch(H) {
+        case 0:
+            for(int i = this->N-1; i >= 0 ; i--) {
+                for(int j = 0; j < this->N; j++) {
+                    if(this->board[i][j] == PLAYER_TWO_HAND) {
+                        wins += countWins(H,i,j);
+                    }
+                    if (wins >= 1) return wins;
+                }
+            }
+            break;
+        case 1:
+            for(int i = this->N-1; i >= 0 ; i--) {
+                for(int j = 0; j < this->N; j++) {
+                    if(this->board[i][j] == PLAYER_ONE_HAND) {
+                        wins += countWins(H,i,j);
+                    }
+                    if (wins >= 1) return wins;
+                }
+            }
+            break;
+        default:
+            return false;
+    }
     return false;
+}
+
+int ConnectM::countWins(int H, int row, int col) {
+    int wins = 0;
+    for(int i = LHORIZ; i <= RDIAG; i++) {
+        int count = 1;
+        switch(i) {
+            case LHORIZ:
+                for(int j = 1; j <= this->M - 1; j++) {
+                    if(isValidRowCol(row,col-j)) {
+                        if(this->board[row][col-j] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
+                            count+=1;
+                        }
+                        else break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if(count == this->M) {
+                    wins+=1;
+                }
+                break;
+            case LDIAG:
+                for(int j = 1; j <= this->M - 1; j++) {
+                    if(isValidRowCol(row-j,col-j)) {
+                        if(this->board[row-j][col-j] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
+                            count+=1;
+                        }
+                        else break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if(count == this->M) {
+                    wins+=1;
+                }
+                break;
+            case VERT:
+                for(int j = 1; j <= this->M - 1; j++) {
+                    if(isValidRowCol(row-j,col)) {
+                        if(this->board[row-j][col] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
+                            count+=1;
+                        }
+                        else break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if(count == this->M) {
+                    wins+=1;
+                }
+                break;
+            case RHORIZ:
+                for(int j = 1; j <= this->M - 1; j++) {
+                    if(isValidRowCol(row,col+j)) {
+                        if(this->board[row][col+j] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
+                            count+=1;
+                        }
+                        else break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if(count == this->M) {
+                    wins+=1;
+                }
+                break;
+            case RDIAG:
+                for(int j = 1; j <= this->M - 1; j++) {
+                    if(isValidRowCol(row-j,col+j)) {
+                        if(this->board[row-j][col+j] == ((H)? PLAYER_ONE_HAND:PLAYER_TWO_HAND)) {
+                            count+=1;
+                        }
+                        else break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if(count == this->M) {
+                    wins+=1;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return wins;
+}
+
+bool ConnectM::isValidRowCol(int row, int col) {
+    return (row >= 0 && row < this->N && col >= 0 && col < this->N);
+}
+
+char** ConnectM::getBoard() {
+    return this->board;
 }
