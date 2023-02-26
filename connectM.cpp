@@ -4,6 +4,7 @@ ConnectM::ConnectM(int N, int M, int H) {
     this->N = N;
     this->M = M;
     this->H = H;
+    this->moveCount = 0;
     this->board = new char*[N];
     for(int i = 0; i < N; i++) {
         this->board[i] = new char[N];
@@ -17,6 +18,7 @@ ConnectM::ConnectM(const ConnectM& obj) {
         this->N = obj.N;
         this->M = obj.M;
         this->H = obj.H;
+        this->moveCount = obj.moveCount;
         this->board = new char*[N];
         for(int i = 0; i < N; i++) {
             this->board[i] = new char[N];
@@ -59,6 +61,7 @@ void ConnectM::operator =(const ConnectM& rhs) {
         this->N = rhs.N;
         this->M = rhs.M;
         this->H = rhs.H;
+        this->moveCount = rhs.moveCount;
         this->board = new char*[N];
         for(int i = 0; i < N; i++) {
             this->board[i] = new char[N];
@@ -68,6 +71,7 @@ void ConnectM::operator =(const ConnectM& rhs) {
 
 void ConnectM::reset() {
     this->initBoard();
+    this->moveCount = 0;
 }
 
 bool ConnectM::move(int col, int H) {
@@ -81,6 +85,7 @@ bool ConnectM::move(int col, int H) {
 
         if(row != -1) {
             this->board[row][col] = (H)? PLAYER_ONE_HAND : PLAYER_TWO_HAND;
+            this->moveCount += 1;
             return true;
         }
     }
@@ -249,4 +254,8 @@ bool ConnectM::isValidRowCol(int row, int col) {
 
 char** ConnectM::getBoard() {
     return this->board;
+}
+
+bool ConnectM::isDraw() {
+    return (this->moveCount == (this->N * this->N));
 }

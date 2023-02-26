@@ -33,6 +33,8 @@ public:
      */
     bool move(int col, int H);
 
+    bool isDraw();
+
     char** getBoard();
     std::string getBoardStr();
 
@@ -41,6 +43,7 @@ public:
     void operator =(const ConnectM& rhs);
 private:
     int N, M, H;
+    int moveCount;
     char** board;
     
     void initBoard();
