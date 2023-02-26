@@ -66,6 +66,10 @@ void ConnectM::operator =(const ConnectM& rhs) {
     }
 }
 
+void ConnectM::reset() {
+    this->initBoard();
+}
+
 bool ConnectM::move(int col, int H) {
     if(0 <= col && col < this->N && (H == 0 || H == 1)) {
         int row = -1;

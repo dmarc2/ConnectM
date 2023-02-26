@@ -36,6 +36,8 @@ public:
     char** getBoard();
     std::string getBoardStr();
 
+    void reset();
+
     void operator =(const ConnectM& rhs);
 private:
     int N, M, H;

@@ -5,12 +5,12 @@ OBJECTS = $(SRCS:%.hpp=%.o)
 TESTS = test-
 CATCH = test/catch/catch.o
 
-main: $(OBJECTS) main.o
+connectM: $(OBJECTS) main.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 .PHONY: clean
 clean:
-	rm main *.o
+	rm connectM *.o
 
 test-all: $(TESTS)
 
