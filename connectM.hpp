@@ -1,8 +1,8 @@
 #ifndef CONNECT_M_HPP
 #define CONNECT_M_HPP
 #include <iostream>
-
 #include <string>
+#include "board.hpp"
 
 const char PLAYER_ONE_HAND = 'X';
 const char PLAYER_TWO_HAND = 'O';
@@ -33,24 +33,28 @@ public:
      */
     bool move(int col, int H);
 
-    bool isDraw();
+    /*
+     * This function is used to check if the maximum number of moves have been
+     * made.
+     * @Postcondition: Returns true if the board is full; otherwise, false.
+     */
+    bool isBoardFull();
 
-    char** getBoard();
-    std::string getBoardStr();
+    std::string showBoard();
 
+    /*
+     * This function is used to reset the game to a clean state.
+     */
     void reset();
 
     void operator =(const ConnectM& rhs);
 private:
-    int N, M, H;
+    int M, H;
     int moveCount;
-    char** board;
+    Board* board;
     
-    void initBoard();
-    void deleteBoard();
-    void initBoard(char** board);
-    void addCellBlocks(std::string& board, int row);
     char determineCellValue(int row, int col);
+    void addCellBlocks(std::string& board, int row);
     void addHorizontalBorder(std::string& board);
 
     int countWins(int H, int row, int col);

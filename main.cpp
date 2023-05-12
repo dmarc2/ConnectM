@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]) {
     if(argc != 4) {
-        std::cout << "Usage: ./connectm N M H\n";
+        std::cout << "Usage: ./connectM N M H\n";
         std::cout << "Where N is the board size NxN\n";
         std::cout << ", M is the winning length\n";
         std::cout << ", and H is 0 if computer goes first\n";
@@ -22,45 +22,47 @@ int main(int argc, char* argv[]) {
     int playerMove = 0;
     do {
         game.reset();
+        std::cout << game.showBoard() << std::endl; 
         while(true) {
+
             do {
-                std::cout << "> ";
+                std::cout << "Enter column> ";
                 std::cin >> playerMove;
             }while((playerMove < 0 || playerMove >= N) || !game.move(playerMove,(H)? 1:0));
             
-            std::cout << game.getBoardStr() << std::endl; 
+            std::cout << game.showBoard() << std::endl; 
 
             if(game.check4Win((H)? 1:0)) {
                 if(H == 1) {
-                    std::cout << "Player one won.\n";
+                    std::cout << "Human won.\n";
                 }
                 else {
-                    std::cout << "Player two won.\n";
+                    std::cout << "Computer won.\n";
                 }
                 break;
             }
-            else if(game.isDraw()) {
+            else if(game.isBoardFull()) {
                 std::cout << "It's a draw!\n";
                 break;
             }
 
             do {
-                std::cout << "> ";
+                std::cout << "Enter column> ";
                 std::cin >> playerMove;
             }while((playerMove < 0 || playerMove >= N) || !game.move(playerMove,(H)? 0:1));
 
-            std::cout << game.getBoardStr() << std::endl; 
+            std::cout << game.showBoard() << std::endl; 
 
             if(game.check4Win((H)? 0:1)) {
                 if(H == 0) {
-                    std::cout << "Player one won.\n";
+                    std::cout << "Human won.\n";
                 }
                 else {
-                    std::cout << "Player two won.\n";
+                    std::cout << "Computer won.\n";
                 }
                 break;
             }
-            else if(game.isDraw()) {
+            else if(game.isBoardFull()) {
                 std::cout << "It's a draw!\n";
                 break;
             }
